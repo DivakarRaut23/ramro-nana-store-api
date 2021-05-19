@@ -1,15 +1,62 @@
-import express from 'express'
-const app = express()
+import dotenv from "dotenv";
+dotenv.config();
 
-const PORT = process.env.PORT || 8000
- 
-app.get('/', function (req, res) {
-  res.send('Hello World')
-})
- 
+import express from "express";
+const app = express();
+import path from "path";
+
+import cors from "cors";
+import morgan from "morgan";
+
+const PORT = process.env.PORT || 8000;
+
+app.use(cors());
+app.use(morgan("tiny"));
+
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, "public")));
+
+// parse application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: false }));
+// parse application/json
+app.use(express.json());
+
+import mongoClient from "./config/db.js";
+mongoClient();
+
+//Auth middleware
+
+
+// LOAD ROUTERS
+
+import userRouter from "./routers/user.router.js";
+
+//USE APIS
+
+app.use("/api/v1/user", userRouter);
+
+
+app.get("/", (req, res) => {
+	res.send("Hello World");
+});
+
+//404 return
+
+app.use((req, res, next) => {
+	const error = new Error("Resources not found");
+	error.status = 404;
+
+	next(error);
+});
+
+//handle error
+import { handleError } from "./utils/errorHandler.js";
+app.use((error, req, res, next) => {
+	handleError(error, res);
+});
+
 app.listen(PORT, error => {
-    if (error) console.log(error)
+	if (error) console.log(error);
 
-    console.log(`Server is running at http://localhost:${PORT}`)
-
-})
+	console.log(`Server is running  at http://localhost:${PORT}`);
+});
