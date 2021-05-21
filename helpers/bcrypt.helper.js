@@ -10,3 +10,16 @@ export const hashPassword = plainPassword => {
 		}
 	});
 };
+
+export const comparePassword = (plainPassword, hashedPassFromDB) => {
+	return new Promise((resolve, reject) => {
+		try {
+			bcrypt.compare(plainPassword, hashedPassFromDB, function (err, result) {
+				if (err) reject(err);
+				resolve(result);
+			});
+		} catch (error) {
+			reject(error);
+		}
+	});
+};
