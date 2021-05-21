@@ -28,11 +28,11 @@ mongoClient();
 
 
 // LOAD ROUTERS
-
+import loginRouter from "./routers/login.router.js";
 import userRouter from "./routers/user.router.js";
 
 //USE APIS
-
+app.use("/api/v1/login", loginRouter);
 app.use("/api/v1/user", userRouter);
 
 

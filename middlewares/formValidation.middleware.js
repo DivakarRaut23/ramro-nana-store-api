@@ -31,6 +31,22 @@ export const newUserValidation = (req, res, next) => {
 	next();
 };
 
+export const loginValidation = (req, res, next) => {
+	const schema = Joi.object({ email, password });
+
+	//validation
+	const value = schema.validate(req.body);
+
+	if (value.error) {
+		return res.json({
+			status: "error",
+			message: value.error.message,
+		});
+	}
+
+	next();
+};
+
 
 
 
