@@ -26,10 +26,14 @@ router.post("/", newUserValidation, async (req, res) => {
 			password: hashPass,
 		};
 
+		
+
 		const result = await createUser(newUser);
 		if (result?._id) {
 			return res.json({ status: "success", message: "login success", result });
 		}
+
+		console.log(result)
 
 		res.json({ status: "error", message: "Invalid login details" });
 	} catch (error) {

@@ -1,6 +1,7 @@
 import UsersSchema from "./User.schema.js";
 
 export const createUser = userObj => {
+	console.log(userObj)
 	return new Promise((resolve, reject) => {
 		try {
 			UsersSchema(userObj)

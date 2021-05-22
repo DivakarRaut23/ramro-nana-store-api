@@ -3,9 +3,9 @@ POST http://localhost:8000/api/v1/user
 Content-Type: application/json
 
 {
-  "fName": "sfjsd",
-  "lName": "sfdkl",
-  "email": "b@c.com",
+  "fName": "David",
+  "lName": "Beckham",
+  "email": "db7@gmail.com",
   "password": "123456",
   "role": "user"
 }
